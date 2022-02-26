@@ -1,0 +1,45 @@
+{
+  "name": "loco-server",
+  "version": "1.0.0",
+  "description": "HTTP Proxy and/or mockup server",
+  "main": "loco.js",
+  "scripts": {
+    "lint": "eslint -f codeframe \"./modules/**/*.js\" \"./sample_functions/*.js\" \"./*.js\" --no-error-on-unmatched-pattern",
+    "format": "prettier --ignore-path .prettierignore --write \"./**/*.+(js|json)\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcinrek/loco-server"
+  },
+  "author": "Marcin Rek <m@rek> (https://github.com/marcinrek)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcinrek/loco-server/issues"
+  },
+  "homepage": "https://github.com/marcinrek/loco-server#readme",
+  "keywords": [
+    "server",
+    "express",
+    "proxy",
+    "mockup"
+  ],
+  "bin": {
+    "loco": "bin/loco.js"
+  },
+  "engines": {
+    "node": ">= 14.18.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-formatter-codeframe": "^7.32.1",
+    "eslint-plugin-import": "^2.18.2",
+    "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "node-fetch": "^2.6.7"
+  }
+}

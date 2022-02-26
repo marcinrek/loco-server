@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "checkJs": false,
+    "baseUrl": "./"
+  },
+  "include": ["./modules/**/*", "./bin/*", "./loco_functions/**/*"],
+  "exclude": ["node_modules", "node_modules/"]
+}
