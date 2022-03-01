@@ -7,6 +7,8 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 1.1.1
+    - fix loco.corsHeaders() error when no headersOverwrites provided
 - 1.1.0
     - pass reqMethod to processFunction to distinguish type of request if required
     - add OPTIONS request support
