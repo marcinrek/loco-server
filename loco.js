@@ -27,6 +27,22 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+// Intercept OPTIONS method
+app.use((req, res, next) => {
+    if ('OPTIONS' === req.method) {
+        // Set headers based on config
+        if (Object.keys(config.optionsRequestHeaders).length) {
+            Object.keys(config.optionsRequestHeaders).forEach((header) => {
+                res.header(header, config.optionsRequestHeaders[header]);
+            });
+        }
+
+        res.send(config.optionsRequestStatusCode);
+    } else {
+        next();
+    }
+});
+
 // Build functions object
 const functionObject = functionsHelpers.buildFunctionsObject(config, cwd);
 

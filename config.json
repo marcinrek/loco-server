@@ -4,11 +4,19 @@
     "appHost": "Host to run the server on",
     "functionsDir": "Directory path to folder containing loco functions relative to cwd",
     "readdirSyncOptions": "fs.readdirSync options object",
-    "envFile": ".env file name with path"
+    "envFile": ".env file name with path",
+    "optionsRequestHeaders": "Response headers for OPTIONS request",
+    "optionsRequestStatusCode": "OPTIONS request status code"
   },
   "appPort": 8888,
   "appHost": "127.0.0.1",
   "functionsDir": "loco_functions",
   "readdirSyncOptions": {},
-  "envFile": ".env"
+  "envFile": ".env",
+  "optionsRequestHeaders": {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "*"
+  },
+  "optionsRequestStatusCode": 200
 }

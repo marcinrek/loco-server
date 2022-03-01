@@ -31,7 +31,7 @@ const process = (res, req, reqMethod, functionObject, envVars) => {
         res.end();
     } else if (Object.keys(functionObject).indexOf(functionName) !== -1) {
         // Run proper processFunction
-        functionObject[functionName].processFunction(query, bodyJSON, loco, envVars).then((response) => {
+        functionObject[functionName].processFunction(query, bodyJSON, reqMethod, loco, envVars).then((response) => {
             const headers = response.headers;
             const body = response.body;
             const statusCode = response.statusCode;

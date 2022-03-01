@@ -52,7 +52,7 @@ const printAvailableFunctions = (functionObject) => {
  * @param {object} config application configuration object
  */
 const printListenInfo = (config) => {
-    console.log(`# Loko listening on ${chalk.yellow(`http://${config.appHost}:${config.appPort}`)}`);
+    console.log(`# Loco listening on ${chalk.yellow(`http://${config.appHost}:${config.appPort}`)}`);
     console.log('###');
 };
 

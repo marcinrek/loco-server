@@ -6,6 +6,12 @@ Loco is a http proxy and/or mockup server.
 * mock API response
 * supports using .env variables
 
+## Changelog
+- 1.1.0
+    - pass reqMethod to processFunction to distinguish type of request if required
+    - add OPTIONS request support
+    - enable ovewriting headers in loco.corsHeaders() helper
+
 ## Installation
 ```
 npm install -sD loco-server
@@ -30,6 +36,12 @@ Sample config file:
   "functionsDir": "loco_functions",
   "readdirSyncOptions": {},
   "envFile": ".env"
+  "optionsRequestHeaders": {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "*"
+  },
+  "optionsRequestStatusCode": 200
 }
 ```
 
@@ -40,6 +52,8 @@ Sample config file:
 | functionsDir | Directory path to folder containing loco functions relative to cwd |
 | readdirSyncOptions | fs.readdirSync options object |
 | envFile | .env file name with path |
+| optionsRequestHeaders | Response headers for OPTIONS request |
+| optionsRequestStatusCode | OPTIONS request status code |
 
 ## Functions 
 Functions are understood as JS files located in the _functionsDir_ specified in the configuration. Each file will be served under a separate webpath in the server. This webpath is equal to the file namie without _.js_ extension. 
@@ -55,11 +69,12 @@ const description = 'Blank function scaffold.';
  * Main process function
  * @param {object} query GET request query
  * @param {object} bodyJSON POST request body
+ * @param {string} reqMethod request method
  * @param {object} loco helper functions object
  * @param {object} envVars environment variables
  * @returns {object} response object consisting of response statusCode, body and headers object
  */
-const processFunction = async (query, bodyJSON, loco, envVars) => {
+const processFunction = async (query, bodyJSON, reqMethod, loco, envVars) => {
     return {
         statusCode: 200,
         headers: loco.corsHeaders(),
@@ -82,6 +97,7 @@ The arguments it accepts are:
 |---|---|
 | query | GET query requested represented as JSON, example:  ```{"query":"test"}``` |
 | bodyJSON | POST body requested as as JSON, example: ```{"login":"john"}``` |
+| reqMethod | Request method as a string, example: ```GET```|
 | loco | object containing predefined helper function, described below in the function helpers section|
 | envVars | environment variables from the .env file defined in the config |
 
@@ -110,7 +126,7 @@ return {
 };
 ```
 this will return _jsonData_ after 3 seconds.
-* ```loco.corsHeaders()``` - returns headers that can be used when you want to enable cors: 
+* ```loco.corsHeaders(headersOverwritesover)``` - returns headers that can be used when you want to enable cors: 
 ```
 {
     'Content-Type': 'application/json; charset=utf-8',
@@ -126,6 +142,10 @@ return {
     headers: loco.corsHeaders(),
     [...]
 };
+```
+You can also overwrite a default header or add a new one:
+```
+headers: loco.corsHeaders({"Content-Type": "text/html; charset=utf-8"}),
 ```
 * ```loco.fetchJSON(url)``` - utility function to make a fetch request to an endpoint that returns JSON response. Example usage:
 ```
