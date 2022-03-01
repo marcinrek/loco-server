@@ -126,7 +126,7 @@ return {
 };
 ```
 this will return _jsonData_ after 3 seconds.
-* ```loco.corsHeaders(headersOverwritesover)``` - returns headers that can be used when you want to enable cors: 
+* ```loco.corsHeaders(headersOverwrites)``` - returns headers that can be used when you want to enable cors: 
 ```
 {
     'Content-Type': 'application/json; charset=utf-8',

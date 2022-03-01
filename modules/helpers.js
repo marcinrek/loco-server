@@ -17,21 +17,22 @@ const returnJsonWithDelay = (sec, jsonResponse) => {
 
 /**
  * CORS response headers
- * @param {object} headersOverwritesover headers to overwrite if required
+ * @param {object} headersOverwrites headers to overwrite if required
  * @returns {object} cors response headers
  */
-const corsHeaders = (headersOverwritesover) => {
+const corsHeaders = (headersOverwrites) => {
     let defaultHeaders = {
         'Content-Type': 'application/json; charset=utf-8',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-type',
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
     };
+    let overwrites = undefined === headersOverwrites ? [] : headersOverwrites;
 
     // Perform overwrites
-    if (Object.keys(headersOverwritesover).length) {
-        Object.keys(headersOverwritesover).forEach((header) => {
-            defaultHeaders[header] = headersOverwritesover[header];
+    if (Object.keys(overwrites).length) {
+        Object.keys(overwrites).forEach((header) => {
+            defaultHeaders[header] = overwrites[header];
         });
     }
 
