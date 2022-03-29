@@ -43,8 +43,8 @@ app.use((req, res, next) => {
     }
 });
 
-// Build functions object
-const functionObject = functionsHelpers.buildFunctionsObject(config, cwd);
+// Build functions object and reload it on file change
+let functionObject = functionsHelpers.buildFunctionsObject(config, cwd);
 
 // Print details to console
 consoleHelpers.printIntroBanner('Loco', appVersion); //  app banner
@@ -64,4 +64,12 @@ app.post('/*', (req, res) => {
 });
 
 // Start the server
-app.listen(config.appPort, config.appHost, consoleHelpers.printListenInfo(config));
+app.listen(config.appPort, config.appHost, consoleHelpers.printListenInfo(config), () => {
+    const chokidar = require('chokidar');
+    chokidar.watch(config.functionsDir).on('all', (event, filename) => {
+        if (filename && filename !== config.functionsDir) {
+            functionObject = functionsHelpers.buildFunctionsObject(config, cwd);
+            consoleHelpers.printFunctionFileChange(filename, event);
+        }
+    });
+});

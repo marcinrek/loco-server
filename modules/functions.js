@@ -1,4 +1,5 @@
 const fs = require('fs');
+const glob = require('glob');
 
 /**
  * Build object with all loco functions
@@ -8,15 +9,12 @@ const fs = require('fs');
  */
 const buildFunctionsObject = (config, cwd) => {
     const functionsObject = {};
-    const functionFiles = fs
-        .readdirSync(`${cwd}/${config.functionsDir}`, config.readdirSyncOptions)
-        .filter((filename) => /\.js$/.test(filename))
-        .map((file) => {
-            return file.replace(/\.js$/g, '');
-        });
 
-    functionFiles.forEach((functionName) => {
-        functionsObject[functionName] = require(`${cwd}/${config.functionsDir}/${functionName}.js`);
+    glob.sync(config.functionsPath, {}).forEach((functionFilePath) => {
+        const functionName = functionFilePath.replace(/.*\//g, '').replace(/\.js$/g, '');
+        const functionNameAbsPath = `${cwd}/${functionFilePath.replace('./', '')}`;
+        delete require.cache[require.resolve(functionNameAbsPath)];
+        functionsObject[functionName] = require(functionNameAbsPath);
         functionsObject[functionName].url = `http://${config.appHost}:${config.appPort}/${functionName}`;
     });
 

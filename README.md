@@ -7,6 +7,11 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 2.0.0
+    - add live reload for function files
+    - additional loco helper - loco.requireUncached('path');
+    - additional loco helper - loco.chalk;
+    - config _functionsDir_ replace with _functionsPath_ which is a glob
 - 1.1.1
     - fix loco.corsHeaders() error when no headersOverwrites provided
 - 1.1.0
@@ -20,7 +25,7 @@ npm install -sD loco-server
 ```
 
 ## Usage
-Straing from the command line:
+Straight from the command line:
 ```
 npx loco <config_file>
 ```
@@ -35,7 +40,7 @@ Sample config file:
 {
   "appPort": 8888,
   "appHost": "127.0.0.1",
-  "functionsDir": "loco_functions",
+  "functionsPath": "loco_functions/*.js",
   "readdirSyncOptions": {},
   "envFile": ".env"
   "optionsRequestHeaders": {
@@ -51,14 +56,14 @@ Sample config file:
 |---|---|
 | appPort | Port to run the server on |
 | appHost | Host to run the server on |
-| functionsDir | Directory path to folder containing loco functions relative to cwd |
+| functionsPath | Glob to where to look for loco functions |
 | readdirSyncOptions | fs.readdirSync options object |
 | envFile | .env file name with path |
 | optionsRequestHeaders | Response headers for OPTIONS request |
 | optionsRequestStatusCode | OPTIONS request status code |
 
 ## Functions 
-Functions are understood as JS files located in the _functionsDir_ specified in the configuration. Each file will be served under a separate webpath in the server. This webpath is equal to the file namie without _.js_ extension. 
+Functions are understood as JS files specified by _functionsPath_ in the configuration. Each file will be served under a separate webpath in the server. This webpath is equal to the file namie without _.js_ extension. 
 
 Function file scaffold:
 ```
@@ -160,4 +165,5 @@ return {
     body: jsonData,
 };
 ```
+* ```loco.requireUncached(path)``` - clear cache for _path_ and then require. Usefull when you modify data in processFunction often.
 

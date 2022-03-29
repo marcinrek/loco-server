@@ -1,5 +1,6 @@
 // Includes
 const fetch = require('node-fetch');
+const chalk = require('chalk');
 
 /**
  * Returns stringified JSON with delay
@@ -48,10 +49,22 @@ const fetchJSON = async (url) => {
     return await (await fetch(url)).json();
 };
 
+/**
+ * Require module without cache
+ * @param {string} module module to clear cache for adn then require
+ * @returns {object} required module
+ */
+const requireUncached = (module) => {
+    delete require.cache[require.resolve(module)];
+    return require(module);
+};
+
 // Export
 module.exports = {
     corsHeaders,
     fetch,
     fetchJSON,
     returnJsonWithDelay,
+    requireUncached,
+    chalk,
 };

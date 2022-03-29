@@ -112,6 +112,15 @@ const printNoConfigProvided = (sampleConfig) => {
     console.log(sampleConfig);
 };
 
+/**
+ * Print info about function file change
+ * @param {string} fileName changed function file name
+ * @param {string} event file event name
+ */
+const printFunctionFileChange = (fileName, event) => {
+    console.log(`File ${chalk.yellow(fileName)} => ${event}.`);
+};
+
 // Export
 module.exports = {
     printIntroBanner,
@@ -122,4 +131,5 @@ module.exports = {
     printEnvVariables,
     printFunctionNotPresent,
     printNoConfigProvided,
+    printFunctionFileChange,
 };
