@@ -10,12 +10,15 @@ const glob = require('glob');
 const buildFunctionsObject = (config, cwd) => {
     const functionsObject = {};
 
-    glob.sync(config.functionsPath, {}).forEach((functionFilePath) => {
-        const functionName = functionFilePath.replace(/.*\//g, '').replace(/\.js$/g, '');
-        const functionNameAbsPath = `${cwd}/${functionFilePath.replace('./', '')}`;
-        delete require.cache[require.resolve(functionNameAbsPath)];
-        functionsObject[functionName] = require(functionNameAbsPath);
-        functionsObject[functionName].url = `http://${config.appHost}:${config.appPort}/${functionName}`;
+    // Loop each glob
+    config.functionsPath.forEach((globPath) => {
+        glob.sync(globPath, {}).forEach((functionFilePath) => {
+            const functionName = functionFilePath.replace(/.*\//g, '').replace(/\.js$/g, '');
+            const functionNameAbsPath = `${cwd}/${functionFilePath.replace('./', '')}`;
+            delete require.cache[require.resolve(functionNameAbsPath)];
+            functionsObject[functionName] = require(functionNameAbsPath);
+            functionsObject[functionName].url = `http://${config.appHost}:${config.appPort}/${functionName}`;
+        });
     });
 
     return functionsObject;

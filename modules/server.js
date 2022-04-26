@@ -30,8 +30,18 @@ const process = (res, req, reqMethod, functionObject, envVars) => {
         res.writeHead(200, {'Content-Type': 'image/x-icon'});
         res.end();
     } else if (Object.keys(functionObject).indexOf(functionName) !== -1) {
+        // Build param object
+        const param = {
+            req,
+            query,
+            bodyJSON,
+            reqMethod,
+            loco,
+            envVars,
+        };
+
         // Run proper processFunction
-        functionObject[functionName].processFunction(query, bodyJSON, reqMethod, loco, envVars).then((response) => {
+        functionObject[functionName].processFunction(param).then((response) => {
             const headers = response.headers;
             const body = response.body;
             const statusCode = response.statusCode;

@@ -2,16 +2,14 @@
   "comments": {
     "appPort": "Port to run the server on.",
     "appHost": "Host to run the server on",
-    "functionsPath": "Glob to where to look for loco functions",
-    "readdirSyncOptions": "fs.readdirSync options object",
+    "functionsPath": "Glob array to where to look for loco functions",
     "envFile": ".env file name with path",
     "optionsRequestHeaders": "Response headers for OPTIONS request",
     "optionsRequestStatusCode": "OPTIONS request status code"
   },
   "appPort": 8888,
   "appHost": "127.0.0.1",
-  "functionsPath": "loco_functions/*.js",
-  "readdirSyncOptions": {},
+  "functionsPath": ["loco_functions/*.js"],
   "envFile": ".env",
   "optionsRequestHeaders": {
     "Access-Control-Allow-Origin": "*",

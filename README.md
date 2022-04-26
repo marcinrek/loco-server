@@ -7,6 +7,9 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 3.0.0
+    - change process function to only have one parameter now called 'param'.
+    - change config _functionsPath_ to be an array of glob entries instead of just one
 - 2.0.0
     - add live reload for function files
     - additional loco helper - loco.requireUncached('path');
@@ -40,7 +43,7 @@ Sample config file:
 {
   "appPort": 8888,
   "appHost": "127.0.0.1",
-  "functionsPath": "loco_functions/*.js",
+  "functionsPath": ["loco_functions/*.js"],
   "readdirSyncOptions": {},
   "envFile": ".env"
   "optionsRequestHeaders": {
@@ -74,17 +77,18 @@ const description = 'Blank function scaffold.';
 
 /**
  * Main process function
- * @param {object} query GET request query
- * @param {object} bodyJSON POST request body
- * @param {string} reqMethod request method
- * @param {object} loco helper functions object
- * @param {object} envVars environment variables
+ * @param {object} param.req entire request object
+ * @param {object} param.query GET request query
+ * @param {object} param.bodyJSON POST request body
+ * @param {string} param.reqMethod request method
+ * @param {object} param.loco helper functions object
+ * @param {object} param.envVars environment variables
  * @returns {object} response object consisting of response statusCode, body and headers object
  */
-const processFunction = async (query, bodyJSON, reqMethod, loco, envVars) => {
+const processFunction = async (param) => {
     return {
         statusCode: 200,
-        headers: loco.corsHeaders(),
+        headers: param.loco.corsHeaders(),
         body: {mockup: true}
     };
 };
@@ -99,9 +103,10 @@ module.exports = {
 
 The _descriptions_ const is used for providing a short summary of a given function.
 Main required function in each function file is the _processFunction_. 
-The arguments it accepts are:
+It has one parameter called param which is an object containing:
 | Argument | Descriptions |
 |---|---|
+| req | full express request object |
 | query | GET query requested represented as JSON, example:  ```{"query":"test"}``` |
 | bodyJSON | POST body requested as as JSON, example: ```{"login":"john"}``` |
 | reqMethod | Request method as a string, example: ```GET```|
@@ -112,7 +117,7 @@ The function must return an object with a given structure:
 ```
 {
     statusCode: 200,
-    headers: loco.corsHeaders(),
+    headers: param.loco.corsHeaders(),
     body: {mockup: true}
 }
 ```
@@ -123,9 +128,9 @@ The function must return an object with a given structure:
 | body | response body |
 
 ## Function helpers
-Current list of helpers passed as a _loco_ argument to the _processFunction_
-* ```loco.fetch()``` - node-fetch module
-* ```loco.returnJsonWithDelay(sec, jsonResponse)``` - usefull when a mocked response is return to fake a time delay. Example usage:
+Current list of helpers passed as a _param.loco_ argument to the _processFunction_
+* ```param.loco.fetch()``` - node-fetch module
+* ```param.loco.returnJsonWithDelay(sec, jsonResponse)``` - usefull when a mocked response is return to fake a time delay. Example usage:
 ```
 return {
     [...]
@@ -146,17 +151,17 @@ Example usage:
 ```
 return {
     [...]
-    headers: loco.corsHeaders(),
+    headers: param.loco.corsHeaders(),
     [...]
 };
 ```
 You can also overwrite a default header or add a new one:
 ```
-headers: loco.corsHeaders({"Content-Type": "text/html; charset=utf-8"}),
+headers: param.loco.corsHeaders({"Content-Type": "text/html; charset=utf-8"}),
 ```
 * ```loco.fetchJSON(url)``` - utility function to make a fetch request to an endpoint that returns JSON response. Example usage:
 ```
-const jsonData = await loco.fetchJSON('https://api.url/').catch((err) => {
+const jsonData = await param.loco.fetchJSON('https://api.url/').catch((err) => {
     return {error: err.message};
 });
 [...]
@@ -165,5 +170,5 @@ return {
     body: jsonData,
 };
 ```
-* ```loco.requireUncached(path)``` - clear cache for _path_ and then require. Usefull when you modify data in processFunction often.
+* ```param.loco.requireUncached(path)``` - clear cache for _path_ and then require. Usefull when you modify data in processFunction often.
 
