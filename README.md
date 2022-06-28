@@ -7,6 +7,8 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 3.1.0
+    - add multer middleware for multipart/form-data support 
 - 3.0.0
     - change process function to only have one parameter now called 'param'.
     - change config _functionsPath_ to be an array of glob entries instead of just one
@@ -44,7 +46,6 @@ Sample config file:
   "appPort": 8888,
   "appHost": "127.0.0.1",
   "functionsPath": ["loco_functions/*.js"],
-  "readdirSyncOptions": {},
   "envFile": ".env"
   "optionsRequestHeaders": {
     "Access-Control-Allow-Origin": "*",
@@ -60,7 +61,6 @@ Sample config file:
 | appPort | Port to run the server on |
 | appHost | Host to run the server on |
 | functionsPath | Glob to where to look for loco functions |
-| readdirSyncOptions | fs.readdirSync options object |
 | envFile | .env file name with path |
 | optionsRequestHeaders | Response headers for OPTIONS request |
 | optionsRequestStatusCode | OPTIONS request status code |
