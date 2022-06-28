@@ -1,6 +1,6 @@
 {
   "name": "loco-server",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "HTTP Proxy and/or mockup server",
   "main": "loco.js",
   "scripts": {
@@ -42,6 +42,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "glob": "^7.2.0",
+    "multer": "^1.4.5-lts.1",
     "node-fetch": "^2.6.7"
   }
 }

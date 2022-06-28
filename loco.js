@@ -23,6 +23,7 @@ const envVars = functionsHelpers.sanitizeEnvObj(sysEnvVars, process.env);
 
 // Express
 const express = require('express');
+const multer = require('multer');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -58,7 +59,7 @@ app.get('/*', (req, res) => {
 });
 
 // Handle POST requests
-app.post('/*', (req, res) => {
+app.post('/*', multer().none(), (req, res) => {
     // Process GET request
     server.process(res, req, 'POST', functionObject, envVars);
 });
