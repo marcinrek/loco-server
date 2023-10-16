@@ -13,8 +13,23 @@ const appVersion = require('../package.json').version;
  *
  */
 const process = (res, req, reqMethod, functionObject, envVars) => {
-    const pathName = req._parsedUrl.pathname;
-    const functionName = pathName.replace('/', '');
+    let pathName = req._parsedUrl.pathname;
+    let functionName = pathName.replace('/', '');
+    let paths = [];
+
+    /**
+     * Support wildcard pathnames
+     * @example /{function_name}/{id}/{something} should fire {function_name}
+     * and pass {id} and {something} to deal with in this function
+     */
+    if (pathName.split('/').length > 2) {
+        functionName = pathName.split('/')[1];
+        paths = pathName
+            .split('/')
+            .slice(2)
+            .filter((str) => str !== '');
+    }
+
     const query = req.query;
     const bodyJSON = req.body;
     const reqStarTime = new Date();
@@ -38,6 +53,7 @@ const process = (res, req, reqMethod, functionObject, envVars) => {
             reqMethod,
             loco,
             envVars,
+            paths,
         };
 
         // Run proper processFunction

@@ -42,11 +42,12 @@ const corsHeaders = (headersOverwrites) => {
 
 /**
  * GET JSON fetch utility function
- * @param {string} url
+ * @param {string} url request url
+ * @param {object} options request options
  * @returns {object} fetch response
  */
-const fetchJSON = async (url) => {
-    return await (await fetch(url)).json();
+const fetchJSON = async (url, options = {}) => {
+    return await (await fetch(url, options)).json();
 };
 
 /**

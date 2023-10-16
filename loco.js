@@ -64,6 +64,24 @@ app.post('/*', multer().none(), (req, res) => {
     server.process(res, req, 'POST', functionObject, envVars);
 });
 
+// Handle PATCH requests
+app.patch('/*', (req, res) => {
+    // Process GET request
+    server.process(res, req, 'PATCH', functionObject, envVars);
+});
+
+// Handle PUT requests
+app.put('/*', (req, res) => {
+    // Process GET request
+    server.process(res, req, 'PATCH', functionObject, envVars);
+});
+
+// Handle DELETE requests
+app.delete('/*', (req, res) => {
+    // Process GET request
+    server.process(res, req, 'PATCH', functionObject, envVars);
+});
+
 // Start the server
 app.listen(config.appPort, config.appHost, consoleHelpers.printListenInfo(config), () => {
     const chokidar = require('chokidar');

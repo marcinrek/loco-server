@@ -11,6 +11,7 @@ const description = 'Blank function scaffold.';
  * @param {string} param.reqMethod request method
  * @param {object} param.loco helper functions object
  * @param {object} param.envVars environment variables
+ * @param {array} param.paths array of wildcard paths
  * @returns {object} response object consisting of response statusCode, body and headers object
  */
 // eslint-disable-next-line no-unused-vars

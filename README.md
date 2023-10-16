@@ -7,8 +7,11 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 3.2.0
+    - make PUT,PATCH and DELETE requests available
+    - support wildcard requests like /{function_name}/{id}/{something} - /{id}/{something} will be available as an array [\{id\}, \{something\}] in param.paths
 - 3.1.0
-    - add multer middleware for multipart/form-data support 
+    - add multer middleware for multipart/form-data support
 - 3.0.0
     - change process function to only have one parameter now called 'param'.
     - change config _functionsPath_ to be an array of glob entries instead of just one
@@ -65,8 +68,8 @@ Sample config file:
 | optionsRequestHeaders | Response headers for OPTIONS request |
 | optionsRequestStatusCode | OPTIONS request status code |
 
-## Functions 
-Functions are understood as JS files specified by _functionsPath_ in the configuration. Each file will be served under a separate webpath in the server. This webpath is equal to the file namie without _.js_ extension. 
+## Functions
+Functions are understood as JS files specified by _functionsPath_ in the configuration. Each file will be served under a separate webpath in the server. This webpath is equal to the file namie without _.js_ extension.
 
 Function file scaffold:
 ```
@@ -102,7 +105,7 @@ module.exports = {
 ```
 
 The _descriptions_ const is used for providing a short summary of a given function.
-Main required function in each function file is the _processFunction_. 
+Main required function in each function file is the _processFunction_.
 It has one parameter called param which is an object containing:
 | Argument | Descriptions |
 |---|---|
@@ -129,7 +132,7 @@ The function must return an object with a given structure:
 
 ## Function helpers
 Current list of helpers passed as a _param.loco_ argument to the _processFunction_
-* ```param.loco.fetch()``` - node-fetch module
+* ```param.loco.fetch(url:string, options:object)``` - node-fetch module
 * ```param.loco.returnJsonWithDelay(sec, jsonResponse)``` - usefull when a mocked response is return to fake a time delay. Example usage:
 ```
 return {
@@ -138,7 +141,7 @@ return {
 };
 ```
 this will return _jsonData_ after 3 seconds.
-* ```loco.corsHeaders(headersOverwrites)``` - returns headers that can be used when you want to enable cors: 
+* ```loco.corsHeaders(headersOverwrites)``` - returns headers that can be used when you want to enable cors:
 ```
 {
     'Content-Type': 'application/json; charset=utf-8',
