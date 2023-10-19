@@ -73,13 +73,13 @@ app.patch('/*', (req, res) => {
 // Handle PUT requests
 app.put('/*', (req, res) => {
     // Process GET request
-    server.process(res, req, 'PATCH', functionObject, envVars);
+    server.process(res, req, 'PUT', functionObject, envVars);
 });
 
 // Handle DELETE requests
 app.delete('/*', (req, res) => {
     // Process GET request
-    server.process(res, req, 'PATCH', functionObject, envVars);
+    server.process(res, req, 'DELETE', functionObject, envVars);
 });
 
 // Start the server

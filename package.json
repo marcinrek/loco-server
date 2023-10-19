@@ -1,6 +1,6 @@
 {
   "name": "loco-server",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "HTTP Proxy and/or mockup server",
   "main": "loco.js",
   "scripts": {
