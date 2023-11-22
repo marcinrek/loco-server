@@ -1,6 +1,6 @@
 {
   "name": "loco-server",
-  "version": "3.2.1",
+  "version": "4.0.0",
   "description": "HTTP Proxy and/or mockup server",
   "main": "loco.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "loco": "bin/loco.js"
   },
   "engines": {
-    "node": ">= 14.18.1"
+    "node": ">= 18.16.0"
   },
   "devDependencies": {
     "eslint": "^8.2.0",

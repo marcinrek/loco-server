@@ -7,6 +7,9 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 4.0.0
+    - add an option to load functions on each request so that it is not required to reload the app on a function file change/add/remove. It does require updating the config by adding reladOnRequest key and setting it to true
+    - change require node version to v18.16.0
 - 3.2.0
     - make PUT,PATCH and DELETE requests available
     - support wildcard requests like /{function_name}/{id}/{something} - /{id}/{something} will be available as an array [\{id\}, \{something\}] in param.paths
@@ -49,7 +52,8 @@ Sample config file:
   "appPort": 8888,
   "appHost": "127.0.0.1",
   "functionsPath": ["loco_functions/*.js"],
-  "envFile": ".env"
+  "envFile": ".env",
+  "reladOnRequest": true,
   "optionsRequestHeaders": {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -65,6 +69,7 @@ Sample config file:
 | appHost | Host to run the server on |
 | functionsPath | Glob to where to look for loco functions |
 | envFile | .env file name with path |
+| reladOnRequest | Flag should funtions be reload on each request which will function as live-reload |
 | optionsRequestHeaders | Response headers for OPTIONS request |
 | optionsRequestStatusCode | OPTIONS request status code |
 
@@ -86,6 +91,7 @@ const description = 'Blank function scaffold.';
  * @param {string} param.reqMethod request method
  * @param {object} param.loco helper functions object
  * @param {object} param.envVars environment variables
+ * @param {array} param.paths array of wildcard paths
  * @returns {object} response object consisting of response statusCode, body and headers object
  */
 const processFunction = async (param) => {
@@ -115,6 +121,7 @@ It has one parameter called param which is an object containing:
 | reqMethod | Request method as a string, example: ```GET```|
 | loco | object containing predefined helper function, described below in the function helpers section|
 | envVars | environment variables from the .env file defined in the config |
+| paths | array of paths that were used when this is a wildcard request |
 
 The function must return an object with a given structure:
 ```
@@ -132,7 +139,7 @@ The function must return an object with a given structure:
 
 ## Function helpers
 Current list of helpers passed as a _param.loco_ argument to the _processFunction_
-* ```param.loco.fetch(url:string, options:object)``` - node-fetch module
+* ```param.loco.fetchJSON(url:string, options:object)``` - node-fetch module
 * ```param.loco.returnJsonWithDelay(sec, jsonResponse)``` - usefull when a mocked response is return to fake a time delay. Example usage:
 ```
 return {
@@ -162,9 +169,15 @@ You can also overwrite a default header or add a new one:
 ```
 headers: param.loco.corsHeaders({"Content-Type": "text/html; charset=utf-8"}),
 ```
-* ```loco.fetchJSON(url)``` - utility function to make a fetch request to an endpoint that returns JSON response. Example usage:
+* ```loco.fetchJSON(url:string, options:object)``` - utility function to make a fetch request to an endpoint that returns JSON response. Example usage:
 ```
-const jsonData = await param.loco.fetchJSON('https://api.url/').catch((err) => {
+const jsonData = await param.loco.fetchJSON('https://api.url/', {
+    method: "PATCH",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(param.bodyJSON.payload)
+}).catch((err) => {
     return {error: err.message};
 });
 [...]
@@ -175,3 +188,7 @@ return {
 ```
 * ```param.loco.requireUncached(path)``` - clear cache for _path_ and then require. Usefull when you modify data in processFunction often.
 
+## Donate
+If you find this piece of code to be useful, please consider a donation :)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=ZPSPDRNU99V4Y)

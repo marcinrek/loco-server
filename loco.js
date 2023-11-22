@@ -54,30 +54,45 @@ consoleHelpers.printEnvVariables(envVars, config); // Print env variables
 
 // Handle GET requests
 app.get('/*', (req, res) => {
+    // Reload functionObject if reladOnRequest enabled
+    config?.reladOnRequest ? (functionObject = functionsHelpers.buildFunctionsObject(config, cwd)) : null;
+
     // Process GET request
     server.process(res, req, 'GET', functionObject, envVars);
 });
 
 // Handle POST requests
 app.post('/*', multer().none(), (req, res) => {
+    // Reload functionObject if reladOnRequest enabled
+    config?.reladOnRequest ? (functionObject = functionsHelpers.buildFunctionsObject(config, cwd)) : null;
+
     // Process GET request
     server.process(res, req, 'POST', functionObject, envVars);
 });
 
 // Handle PATCH requests
 app.patch('/*', (req, res) => {
+    // Reload functionObject if reladOnRequest enabled
+    config?.reladOnRequest ? (functionObject = functionsHelpers.buildFunctionsObject(config, cwd)) : null;
+
     // Process GET request
     server.process(res, req, 'PATCH', functionObject, envVars);
 });
 
 // Handle PUT requests
 app.put('/*', (req, res) => {
+    // Reload functionObject if reladOnRequest enabled
+    config?.reladOnRequest ? (functionObject = functionsHelpers.buildFunctionsObject(config, cwd)) : null;
+
     // Process GET request
     server.process(res, req, 'PUT', functionObject, envVars);
 });
 
 // Handle DELETE requests
 app.delete('/*', (req, res) => {
+    // Reload functionObject if reladOnRequest enabled
+    config?.reladOnRequest ? (functionObject = functionsHelpers.buildFunctionsObject(config, cwd)) : null;
+
     // Process GET request
     server.process(res, req, 'DELETE', functionObject, envVars);
 });

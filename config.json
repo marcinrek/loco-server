@@ -4,6 +4,7 @@
     "appHost": "Host to run the server on",
     "functionsPath": "Glob array to where to look for loco functions",
     "envFile": ".env file name with path",
+    "reladOnRequest": "Load function files on each request",
     "optionsRequestHeaders": "Response headers for OPTIONS request",
     "optionsRequestStatusCode": "OPTIONS request status code"
   },
@@ -11,6 +12,7 @@
   "appHost": "127.0.0.1",
   "functionsPath": ["loco_functions/*.js"],
   "envFile": ".env",
+  "reladOnRequest": true,
   "optionsRequestHeaders": {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
