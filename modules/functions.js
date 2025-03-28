@@ -12,7 +12,7 @@ const buildFunctionsObject = (config, cwd) => {
     // Loop each glob
     config.functionsPath.forEach((globPath) => {
         glob.sync(globPath, {}).forEach((functionFilePath) => {
-            const functionName = functionFilePath.replace(/.*\//g, '').replace(/\.js$/g, '');
+            const functionName = functionFilePath.replace(/.*\//g, '').replace(/\.(js|cjs)$/g, '');
             const functionNameAbsPath = `${cwd}/${functionFilePath.replace('./', '')}`;
             delete require.cache[require.resolve(functionNameAbsPath)];
             functionsObject[functionName] = require(functionNameAbsPath);

@@ -7,8 +7,12 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 4.0.3
+    - function files can now have .js or .cjs extenstion
+- 4.0.2
+    - fix typo in docs
 - 4.0.0
-    - add an option to load functions on each request so that it is not required to reload the app on a function file change/add/remove. It does require updating the config by adding reladOnRequest key and setting it to true
+    - add an option to load functions on each request so that it is not required to reload the app on a function file change/add/remove. It does require updating the config by adding reloadOnRequest key and setting it to true
     - change require node version to v18.16.0
 - 3.2.0
     - make PUT,PATCH and DELETE requests available
@@ -53,7 +57,7 @@ Sample config file:
   "appHost": "127.0.0.1",
   "functionsPath": ["loco_functions/*.js"],
   "envFile": ".env",
-  "reladOnRequest": true,
+  "reloadOnRequest": true,
   "optionsRequestHeaders": {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -69,7 +73,7 @@ Sample config file:
 | appHost | Host to run the server on |
 | functionsPath | Glob to where to look for loco functions |
 | envFile | .env file name with path |
-| reladOnRequest | Flag should funtions be reload on each request which will function as live-reload |
+| reloadOnRequest | Flag should funtions be reload on each request which will function as live-reload |
 | optionsRequestHeaders | Response headers for OPTIONS request |
 | optionsRequestStatusCode | OPTIONS request status code |
 
