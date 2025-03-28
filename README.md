@@ -7,6 +7,8 @@ Loco is a http proxy and/or mockup server.
 * supports using .env variables
 
 ## Changelog
+- 4.0.4
+    - add a config option "maxRequestBodySize" which controls the maximum request body size for Express JSON middleware
 - 4.0.3
     - function files can now have .js or .cjs extenstion
 - 4.0.2

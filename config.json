@@ -6,7 +6,8 @@
     "envFile": ".env file name with path",
     "reloadOnRequest": "Load function files on each request",
     "optionsRequestHeaders": "Response headers for OPTIONS request",
-    "optionsRequestStatusCode": "OPTIONS request status code"
+    "optionsRequestStatusCode": "OPTIONS request status code",
+    "maxRequestBodySize": "Express JSON middleware max request body size"
   },
   "appPort": 8888,
   "appHost": "127.0.0.1",
@@ -18,5 +19,6 @@
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "*"
   },
-  "optionsRequestStatusCode": 200
+  "optionsRequestStatusCode": 200,
+  "maxRequestBodySize": "50mb"
 }

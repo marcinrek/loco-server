@@ -25,7 +25,7 @@ const envVars = functionsHelpers.sanitizeEnvObj(sysEnvVars, process.env);
 const express = require('express');
 const multer = require('multer');
 const app = express();
-app.use(express.json());
+app.use(express.json({limit: config.maxRequestBodySize ? config.maxRequestBodySize : '100kb'}));
 app.use(express.urlencoded({extended: true}));
 
 // Intercept OPTIONS method
